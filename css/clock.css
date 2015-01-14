@@ -1,0 +1,15 @@
+.name {
+   font-family: Arial;
+   font-weight: bolder;
+   font-size: 50px;
+}
+
+#clock {
+   color: white;
+   font-size: 100px;
+}
+
+body {
+   background-color: green;
+   text-align: center;
+}
