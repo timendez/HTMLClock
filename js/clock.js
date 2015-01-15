@@ -5,10 +5,10 @@ function getTime() {
 
    if(hour > 12) {
       hour -= 12;
-      time = hour + time + "am";
+      time = hour + time + "pm";
    }
    else {
-      time = hour + time + "pm";
+      time = hour + time + "am";
    }
 
    document.getElementById("clock").innerHTML = time;
