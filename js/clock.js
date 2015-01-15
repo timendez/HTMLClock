@@ -5,7 +5,7 @@ function getTime() {
 
    if(hour > 12) {
       hour -= 12;
-      time = hour + time + "pm";
+      time = hour + time + "am";
    }
    else {
       time = hour + time + "pm";
