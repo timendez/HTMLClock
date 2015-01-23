@@ -7,6 +7,9 @@ function getTime() {
       hour -= 12;
       time = hour + time + "pm";
    }
+   else if (hour === 12) {
+      time = hour + time + "pm";
+   }
    else {
       time = hour + time + "am";
    }
