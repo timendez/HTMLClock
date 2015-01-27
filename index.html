@@ -6,7 +6,7 @@
       <title>JS Clock</title>
    </head>
 
-   <body onload="getTime()">
+   <body onload="getTime();getTemp();">
       <h3 class="name">
          Tim's Clock
       </h3>
@@ -15,8 +15,11 @@
          No Alarms Set
       </h2>
       
-      <div id="clock">
-      </div>
+      <div id="clock"></div>
+      
+      <img id="forecastIcon"></img>
+      <div id="forecastLabel"></div>
       <script src="js/clock.js" type="text/javascript"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
    </body>
 </html>

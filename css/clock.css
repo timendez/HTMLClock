@@ -1,3 +1,23 @@
+.cold {
+   background-color: #95A5A6;
+}
+
+.chilly {
+   background-color: #1ABC9C;
+}
+
+.nice {
+   background-color: #2980B9;
+}
+
+.warm {
+   background-color: #E67E22;
+}
+
+.hot {
+   background-color: #E74C3C;
+}
+
 .name {
    font-family: Arial;
    font-weight: bolder;
