@@ -27,15 +27,21 @@ function getTemp() {
       navigator.geolocation.getCurrentPosition(function(coord) {
          latitude = coord.coords.latitude;
          longitude = coord.coords.longitude;
+         setElements(latitude, longitude);
       });
    }
-   
+   else {
+      setElements(latitude, longitude);
+   }
+}
+
+function setElements(latitude, longitude) {
    var url = "https://api.forecast.io/forecast/6207bfdb81ffb068a9efdd74abdbaf3f/" + latitude + "," + longitude + "?callback=?";
    var cityURL = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&sensor=true";
    
    //Getting JSON for name of city
    $.getJSON(cityURL, function(data) {
-      var city = data.results[0].address_components[1].long_name;
+      var city = data.results[0].address_components[2].long_name;
       document.getElementById("city").innerHTML = city;
    });
    
