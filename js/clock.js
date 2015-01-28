@@ -23,11 +23,13 @@ function getTemp() {
    var longitude = "-120.662362";
    
    //If user declines geolocation, lat/long automatically set to Building 14 of Cal Poly
-   navigator.geolocation.getCurrentPosition(function(coord) {
-      latitude = coord.latitude;
-      longitude = coord.longitude;
-   });
-
+   if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(coord) {
+         latitude = coord.coords.latitude;
+         longitude = coord.coords.longitude;
+      });
+   }
+   
    var url = "https://api.forecast.io/forecast/6207bfdb81ffb068a9efdd74abdbaf3f/" + latitude + "," + longitude + "?callback=?";
    var cityURL = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&sensor=true";
    
