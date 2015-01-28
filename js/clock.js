@@ -19,8 +19,25 @@ function getTime() {
 }
 
 function getTemp() {
-   var url = "https://api.forecast.io/forecast/6207bfdb81ffb068a9efdd74abdbaf3f/35.300399,-120.662362?callback=?";
+   var latitude = "35.300399";
+   var longitude = "-120.662362";
    
+   //If user declines geolocation, lat/long automatically set to Building 14 of Cal Poly
+   navigator.geolocation.getCurrentPosition(function(coord) {
+      latitude = coord.latitude;
+      longitude = coord.longitude;
+   });
+
+   var url = "https://api.forecast.io/forecast/6207bfdb81ffb068a9efdd74abdbaf3f/" + latitude + "," + longitude + "?callback=?";
+   var cityURL = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&sensor=true";
+   
+   //Getting JSON for name of city
+   $.getJSON(cityURL, function(data) {
+      var city = data.results[0].address_components[1].long_name;
+      document.getElementById("city").innerHTML = city;
+   });
+   
+   //Getting JSON for forecast information
    $.getJSON(url, function(data) {
       document.getElementById("forecastLabel").innerHTML = data.daily.summary;
       $("#forecastIcon").attr("src", "img/" + data.daily.icon + ".png");
