@@ -28,6 +28,8 @@ function getTemp() {
          latitude = coord.coords.latitude;
          longitude = coord.coords.longitude;
          setElements(latitude, longitude);
+      }, function errorFunc() {
+         setElements(latitude, longitude);
       });
    }
    else {
