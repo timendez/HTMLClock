@@ -68,3 +68,100 @@ function setElements(latitude, longitude) {
       });
    });
 }
+
+function showAlarmPopup() {
+   $("#mask").removeClass("hide");
+   $("#popup").removeClass("hide");
+}
+
+function hideAlarmPopup() {
+   $("#mask").addClass("hide");
+   $("#popup").addClass("hide");
+}
+
+function insertAlarm(hours, mins, ampm, alarmName, alarmObject) {
+   var div = document.createElement("div");
+   var div2 = document.createElement("div");
+   var deleteDiv = document.createElement("button");
+   var div3 = document.createElement("div");
+   
+   $(deleteDiv).html("Delete");
+   $(deleteDiv).data("alarmObject", alarmObject);
+   $(deleteDiv).data("divv", div);
+   $(deleteDiv).attr("onClick", "deleteAlarm($(this).data(\"alarmObject\"), $(this).data(\"divv\"))");
+   
+   $(div).addClass("flexable");
+   $(div2).addClass("name");
+   $(div3).addClass("time");
+   
+   $(div2).html(alarmName);
+   $(div3).html(hours + ":" + mins + ampm);
+   
+   $(div3).append(deleteDiv);
+   $(div2).append(div3);
+   $(div).append(div2);
+
+   $("#alarms").append(div);
+}
+
+function deleteAlarm(alarmObject, div) {
+   alarmObject.destroy({
+      success: function(alarmObject) {
+       $(div).remove();
+      },
+      error: function(alarmObject, error) {
+         alert("Error in deleting alarm");
+      }
+   });
+   
+}
+
+function addAlarm() {
+   var hours = $("#hours option:selected").text();
+   var mins = $("#mins option:selected").text();
+   var ampm = $("#ampm option:selected").text();
+   var alarmName = $("#alarmName").val();
+   
+   var AlarmObject = Parse.Object.extend("Alarm"); 
+   var alarmObject = new AlarmObject();
+
+   alarmObject.save({"hours": hours, "mins": mins, "ampm": ampm, "alarmName": alarmName}, {
+      success: function(object) {
+         insertAlarm(hours, mins, ampm, alarmName, alarmObject);
+         hideAlarmPopup();
+      }
+   });
+}
+
+function setOptions() {
+   for(var mins = 0; mins < 60; mins++)
+      $("<option>").text(zeroPadding(mins)).appendTo("select#mins");
+      
+   for(var hours = 1; hours < 13; hours++)
+      $("<option>").text(zeroPadding(hours)).appendTo("select#hours");
+}
+
+function zeroPadding(numba) {
+   var str = numba + "";
+   
+   if(str.length >= 2) {
+      return str;
+   }
+   
+   //number is 0-9
+   return "0" + str;
+}
+
+function getAllAlarms() {
+   Parse.initialize("mIfg90i20nfcorygEDNRCSmqMmiO6lWG6wjGKUQD", "QMQ1Fzjy2j7Ep28CCCVDDq15Agi4xmQ7Y70OqGET");
+
+   var AlarmObject = Parse.Object.extend("Alarm");
+   var query = new Parse.Query(AlarmObject);
+   query.find({
+     success: function(results) {
+        for (var i = 0; i < results.length; i++) { 
+           insertAlarm(results[i].attributes.hours, results[i].attributes.mins, results[i].attributes.ampm, results[i].attributes.alarmName, results[i]);
+         }
+     }
+   });
+}
