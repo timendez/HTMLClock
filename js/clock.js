@@ -3,11 +3,15 @@ function getTime() {
    var hour = d.getHours();
    var time  = ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
 
-   if(hour > 12) {
+   if(hour === 24) {
       hour -= 12;
-      time = hour + time + "pm";
+      time = hour + time + "am";
    }
    else if (hour === 12) {
+      time = hour + time + "pm";
+   }
+   else if(hour > 12) {
+      hour -= 12;
       time = hour + time + "pm";
    }
    else {
@@ -102,12 +106,20 @@ function insertAlarm(hours, mins, ampm, alarmName, alarmObject) {
    $(div).append(div2);
 
    $("#alarms").append(div);
+   
+   //Alarm alert
+   alarmAlert(hours, mins, ampm, alarmName, alarmObject);
 }
 
 function deleteAlarm(alarmObject, div) {
    alarmObject.destroy({
       success: function(alarmObject) {
-       $(div).remove();
+      
+         //if no alarms present
+         if(!$(div).next().length && !$(div).prev().hasClass("flexable")) {
+            toggleNoAlarmsSet();
+         }
+         $(div).remove();
       },
       error: function(alarmObject, error) {
          alert("Error in deleting alarm");
@@ -127,10 +139,58 @@ function addAlarm() {
 
    alarmObject.save({"hours": hours, "mins": mins, "ampm": ampm, "alarmName": alarmName}, {
       success: function(object) {
+         hideNoAlarmsSet();
          insertAlarm(hours, mins, ampm, alarmName, alarmObject);
          hideAlarmPopup();
       }
    });
+}
+
+function alarmAlert(hours, mins, ampm, alarmName, alarmObject) {
+   var future = 0; //MS until alarm should go off
+   var now = new Date();
+   var curHours = now.getHours(), curMins = now.getMinutes(), curSecs = now.getSeconds();
+   var hoursNum = parseInt(hours), minsNum = parseInt(mins);
+   var hoursToMS = 3600000; //how many ms are in an hour
+   var minsToMS = 60000; //how many ms are in a minute
+   var secsToMS = 1000; //how many ms are in a minute
+   
+   //converting to military time
+   if(ampm === "pm" && hours !== "12")
+      hoursNum += 12;
+   else if(ampm === "am" && hours === "12")
+      hoursNum = 0;
+   
+   if(24 - curHours + hoursNum >= 25) //current day
+      future += (hoursNum - curHours - 1) * hoursToMS;
+   else {
+      if(24 - curHours + hoursNum === 24) {
+         if(curMins > minsNum) //next day
+            future += 24 * hoursToMS; //one day later
+      }
+      else //next day
+         future += (24 - curHours + hoursNum - 1) * hoursToMS;
+   }
+   
+   if(60 - curMins + minsNum >= 61) //current hour
+      future += (minsNum - curMins - 1) * minsToMS;
+   else
+      future += (60 - curMins + minsNum - 1) * minsToMS;      
+   
+   if(60 - curSecs >= 61)
+      future += (0 - curSecs) * secsToMS;
+   else
+      future += (60 - curSecs) * secsToMS;
+  
+   var timeout = setTimeout(function() {
+      alarmObject.fetch({
+         //Alarm hasn't been deleted
+         success: function(alarmObject) {
+            alert(alarmName + "!");
+            alarmAlert(hours, mins, ampm, alarmName, alarmObject);
+         }
+      });
+   }, future);
 }
 
 function setOptions() {
@@ -161,7 +221,20 @@ function getAllAlarms() {
      success: function(results) {
         for (var i = 0; i < results.length; i++) { 
            insertAlarm(results[i].attributes.hours, results[i].attributes.mins, results[i].attributes.ampm, results[i].attributes.alarmName, results[i]);
-         }
+        }
+        
+        //if there are loaded alarms
+        if(i !== 0) {
+           toggleNoAlarmsSet();
+        }
      }
    });
+}
+
+function toggleNoAlarmsSet() {
+   $("#noAlarmsSet").toggle();
+}
+
+function hideNoAlarmsSet() {
+   $("#noAlarmsSet").hide();
 }
