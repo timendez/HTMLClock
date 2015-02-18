@@ -1,3 +1,24 @@
+/*function authTwitter() {
+   var rdrURL = encodeURI("ec2-54-191-2-205.us-west-2.compute.amazonaws.com");
+   
+   $.ajax({
+      type: "POST",
+      url: "https://api.twitter.com/oauth/request_token",
+      headers: {
+         OAuth oauth_nonce="K7ny27JTpKVsTgdyLdDfmQQWVLERj2zAK5BslRsqyw",
+         oauth_callback=rdrURL,
+         oauth_signature_method="HMAC-SHA1",
+         oauth_timestamp="1300228849",
+         oauth_consumer_key="OqEqJeafRSF11jBMStrZz",
+         oauth_signature="Pc%2BMLdv028fxCErFyi8KXFM%2BddU%3D",
+         oauth_version="1.0"
+      },
+      data: data,
+      success: success,
+      dataType: dataType
+   });
+} */
+
 function getTime() {
    var d = new Date();
    var hour = d.getHours();
@@ -129,6 +150,7 @@ function deleteAlarm(alarmObject, div) {
 }
 
 function addAlarm() {
+alert("taco");
    var hours = $("#hours option:selected").text();
    var mins = $("#mins option:selected").text();
    var ampm = $("#ampm option:selected").text();
