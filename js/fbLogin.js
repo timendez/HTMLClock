@@ -66,6 +66,7 @@ window.fbAsyncInit = function() {
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
 function loggedIn() {
+alert("yw");
    $.getScript("clock.js", function() {
    alert();
       FB.api('/me', function(response) {
