@@ -132,7 +132,6 @@ function deleteAlarm(alarmObject, div) {
 }
 
 function addAlarm() {
-alert("taco");
    var hours = $("#hours option:selected").text();
    var mins = $("#mins option:selected").text();
    var ampm = $("#ampm option:selected").text();
@@ -216,13 +215,13 @@ function zeroPadding(numba) {
    return "0" + str;
 }
 
-function getAllAlarms(userID) {
+function getAllAlarms(userId) {
    Parse.initialize("mIfg90i20nfcorygEDNRCSmqMmiO6lWG6wjGKUQD", "QMQ1Fzjy2j7Ep28CCCVDDq15Agi4xmQ7Y70OqGET");
 
    var AlarmObject = Parse.Object.extend("Alarm");
    var query = new Parse.Query(AlarmObject);
    
-   query.equalTo("userID", userID);
+   query.equalTo("userId", userId);
    sorryGlobal = userID;
    
    query.find({

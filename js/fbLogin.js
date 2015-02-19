@@ -67,7 +67,6 @@ window.fbAsyncInit = function() {
 // successful.  See statusChangeCallback() for when this call is made.
 function loggedIn() {
    $.getScript("js/clock.js", function() {
-      alert("script loaded");
       FB.api('/me', function(response) {
          document.getElementById('userName').innerHTML = response.name;
          $("#loginButton").addClass("hide");
