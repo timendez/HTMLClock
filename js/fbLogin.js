@@ -6,7 +6,6 @@ function statusChangeCallback(response) {
  // for FB.getLoginStatus().
  if (response.status === 'connected') {
    // Logged into your app and Facebook.
-   alert("k");
    testAPI();
  } else if (response.status === 'not_authorized') {
    // The person is logged into Facebook, but not your app.
@@ -69,7 +68,8 @@ FB.getLoginStatus(function(response) {
 // successful.  See statusChangeCallback() for when this call is made.
 function testAPI() {
   FB.api('/me', function(response) {
+  alert();
+  document.getElementById('userName').innerHTML = response.name;
      $("#loginButton").addClass("hide");
-     document.getElementById('userName').innerHTML = response.name;
   });
 }
