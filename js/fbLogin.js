@@ -23,9 +23,9 @@ function statusChangeCallback(response) {
 // Button.  See the onlogin handler attached to it in the sample
 // code below.
 function checkLoginState() {
- FB.getLoginStatus(function(response) {
-   statusChangeCallback(response);
- });
+   FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+   });
 }
 
 window.fbAsyncInit = function() {
@@ -67,9 +67,8 @@ FB.getLoginStatus(function(response) {
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
 function testAPI() {
-  FB.api('/me', function(response) {
-  alert("l");
-  document.getElementById('userName').innerHTML = response.name;
-     //$("#loginButton").addClass("hide");
-  });
+   FB.api('/me', function(response) {
+      document.getElementById('userName').innerHTML = response.name;
+      $("#loginButton").addClass("hide");
+   });
 }
