@@ -68,8 +68,8 @@ FB.getLoginStatus(function(response) {
 // successful.  See statusChangeCallback() for when this call is made.
 function testAPI() {
   FB.api('/me', function(response) {
-  alert();
+  alert("l");
   document.getElementById('userName').innerHTML = response.name;
-     $("#loginButton").addClass("hide");
+     //$("#loginButton").addClass("hide");
   });
 }
