@@ -66,9 +66,8 @@ window.fbAsyncInit = function() {
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
 function loggedIn() {
-alert("yw");
-   $.getScript("clock.js", function() {
-   alert();
+   $.getScript("js/clock.js", function() {
+      alert("script loaded");
       FB.api('/me', function(response) {
          document.getElementById('userName').innerHTML = response.name;
          $("#loginButton").addClass("hide");
