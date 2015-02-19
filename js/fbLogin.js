@@ -55,7 +55,7 @@ window.fbAsyncInit = function() {
 
 };
 
-/*
+
 // Load the SDK asynchronously
 (function(d, s, id) {
    var js, fjs = d.getElementsByTagName(s)[0];
@@ -63,7 +63,7 @@ window.fbAsyncInit = function() {
    js = d.createElement(s); js.id = id;
    js.src = "//connect.facebook.net/en_US/sdk.js";
    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));*/
+}(document, 'script', 'facebook-jssdk'));
 
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
@@ -71,5 +71,9 @@ function testAPI() {
    FB.api('/me', function(response) {
       document.getElementById('userName').innerHTML = response.name;
       $("#loginButton").addClass("hide");
+      if($("#loginButton").hasClass("hide"))
+         alert("lgtm");
+      else
+         alert("boo");
    });
 }
