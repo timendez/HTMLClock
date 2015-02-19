@@ -222,10 +222,11 @@ function getAllAlarms(userId) {
    var query = new Parse.Query(AlarmObject);
    
    query.equalTo("userId", userId);
-   sorryGlobal = userID;
+   sorryGlobal = userId;
    
    query.find({
      success: function(results) {
+     alert("yey");
         for (var i = 0; i < results.length; i++) { 
            insertAlarm(results[i].attributes.hours, results[i].attributes.mins, results[i].attributes.ampm, results[i].attributes.alarmName, results[i]);
         }
