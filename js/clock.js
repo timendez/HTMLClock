@@ -1,3 +1,6 @@
+//userID of logged in Facebook user. In database for retrieving/setting alarms
+var sorryGlobal;
+
 function getTime() {
    var d = new Date();
    var hour = d.getHours();
@@ -138,7 +141,7 @@ alert("taco");
    var AlarmObject = Parse.Object.extend("Alarm"); 
    var alarmObject = new AlarmObject();
 
-   alarmObject.save({"hours": hours, "mins": mins, "ampm": ampm, "alarmName": alarmName}, {
+   alarmObject.save({"hours": hours, "mins": mins, "ampm": ampm, "alarmName": alarmName, "userId": sorryGlobal}, {
       success: function(object) {
          hideNoAlarmsSet();
          insertAlarm(hours, mins, ampm, alarmName, alarmObject);
@@ -213,11 +216,15 @@ function zeroPadding(numba) {
    return "0" + str;
 }
 
-function getAllAlarms() {
+function getAllAlarms(userID) {
    Parse.initialize("mIfg90i20nfcorygEDNRCSmqMmiO6lWG6wjGKUQD", "QMQ1Fzjy2j7Ep28CCCVDDq15Agi4xmQ7Y70OqGET");
 
    var AlarmObject = Parse.Object.extend("Alarm");
    var query = new Parse.Query(AlarmObject);
+   
+   query.equalTo("userID", userID);
+   sorryGlobal = userID;
+   
    query.find({
      success: function(results) {
         for (var i = 0; i < results.length; i++) { 
