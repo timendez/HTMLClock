@@ -140,13 +140,19 @@ function addAlarm() {
    var AlarmObject = Parse.Object.extend("Alarm"); 
    var alarmObject = new AlarmObject();
 
-   alarmObject.save({"hours": hours, "mins": mins, "ampm": ampm, "alarmName": alarmName, "userId": sorryGlobal}, {
-      success: function(object) {
-         hideNoAlarmsSet();
-         insertAlarm(hours, mins, ampm, alarmName, alarmObject);
-         hideAlarmPopup();
-      }
-   });
+   if(sorryGlobal === undefined) {
+      hideAlarmPopup();
+      alert("You must login with Facebook in order to save an alarm!");
+   }
+   else {
+      alarmObject.save({"hours": hours, "mins": mins, "ampm": ampm, "alarmName": alarmName, "userId": sorryGlobal}, {
+         success: function(object) {
+            hideNoAlarmsSet();
+            insertAlarm(hours, mins, ampm, alarmName, alarmObject);
+            hideAlarmPopup();
+         }
+      });
+   }
 }
 
 function alarmAlert(hours, mins, ampm, alarmName, alarmObject) {
@@ -226,7 +232,7 @@ function getAllAlarms(userId) {
    
    query.find({
      success: function(results) {
-     alert("yey");
+
         for (var i = 0; i < results.length; i++) { 
            insertAlarm(results[i].attributes.hours, results[i].attributes.mins, results[i].attributes.ampm, results[i].attributes.alarmName, results[i]);
         }
