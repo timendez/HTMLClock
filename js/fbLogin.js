@@ -69,7 +69,6 @@ FB.getLoginStatus(function(response) {
 function testAPI() {
   FB.api('/me', function(response) {
      $("#loginButton").addClass("hide");
-    document.getElementById('loginButton').
      document.getElementById('userName').innerHTML = response.name;
   });
 }
