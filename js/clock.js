@@ -115,6 +115,9 @@ function insertAlarm(hours, mins, ampm, alarmName, alarmObject) {
 }
 
 function deleteAlarm(alarmObject, div) {
+   //Google Analytics
+   ga('send', 'event', 'Alarm', 'Delete');
+   
    alarmObject.destroy({
       success: function(alarmObject) {
       
@@ -132,6 +135,9 @@ function deleteAlarm(alarmObject, div) {
 }
 
 function addAlarm() {
+   //Google Analytics
+   ga('send', 'event', 'Alarm', 'Add');
+
    var hours = $("#hours option:selected").text();
    var mins = $("#mins option:selected").text();
    var ampm = $("#ampm option:selected").text();
