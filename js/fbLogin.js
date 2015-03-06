@@ -69,6 +69,7 @@ function loggedIn() {
    $.getScript("js/clock.js", function() {
       FB.api('/me', function(response) {
          document.getElementById('userName').innerHTML = response.name;
+         document.getElementById('clockname').innerHTML = response.first_name+"'s Clock";
          $("#loginButton").addClass("hide");
          getAllAlarms(response.id);
       });
